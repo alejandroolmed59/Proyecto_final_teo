@@ -1,0 +1,41 @@
+S -> D S
+S -> ''
+
+D -> R A ;
+D -> A ;
+D -> I 
+
+I -> if ( E ) { I1 } I2
+I1 -> D I1
+I1 -> ''
+I2 -> else { I1 }
+I2 -> ''
+
+R -> int
+R -> float
+R -> char
+R -> void
+
+A -> id = E A1
+A1 -> , A
+A1 -> ''
+ 
+E -> T E1
+E1 -> + T E1
+E1 -> - T E1 
+E1 -> ''
+T -> F T1
+T1 -> * F T1 
+T1 -> / F T1 
+T1 -> L F T1 
+T1 -> ''
+F  -> ( E )  
+F -> C
+
+C -> num
+C -> letter
+C -> id
+
+L -> ==
+L -> &&
+L -> ||
