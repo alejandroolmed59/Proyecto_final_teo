@@ -12,10 +12,10 @@ def miParser(data):
     # f = open('fuente.c','r')
     # lexer.input(f.read())
     lexer.input(data)
-
     tok = lexer.token()
-    x = stack[-1]  # primer elemento de der a izq
+    x = stack[-1]  # obtiene el tope de la pila
     while True:
+        print("Token :", tok)
         if x == tok.type and x == "EOF":
             print("Todo bien todo correcto")
             return  # aceptar
@@ -28,13 +28,13 @@ def miParser(data):
             if x in tokens and x != tok.type:
                 print("Error: se esperaba ", tok.type)
                 print("en la posicion: ", tok.lexpos)
-                return 0
+                return 0                                    #TODO: Manejar errores
             if x not in tokens:  # es no terminal
                 celda = buscar_en_tabla(x, tok.type)
                 if celda is None:
                     print("Error: NO se esperaba", tok.type)
                     print("en la posicion: ", tok.lexpos)
-                    return 0
+                    return 0                                   #TODO: MANEJAR ERROR
                 else:
                     stack.pop()
                     agregar_pila(celda)
@@ -60,7 +60,7 @@ def agregar_pila(produccion):
 
 # Symbol Table
 symbol_table = defaultdict(list)
-
+ 
 # Insertar
 def symbol_table_insert(name, type, line, pos):
     symbol_table[name].append([type, line, pos])

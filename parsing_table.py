@@ -1,3 +1,4 @@
+#Identificarlos
 S = 0
 D = 1
 I = 2
@@ -13,7 +14,7 @@ T1 = 11
 F = 12
 C = 13
 L = 14
-
+#Tabla LL 1 CONSTRUIDA CON LA GRAMATICA
 tabla2 = [
     # Start
     [S, "SEMICOLON", None],

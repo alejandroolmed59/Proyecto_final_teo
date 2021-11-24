@@ -192,22 +192,10 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-
-source_code = """
-# include <stdlib.h>
-# define TRUE 1
-
-// comment
-
-int main (int a) {
-    if (a =  2) {
-
-    }
-}
-"""
+fileData = open("./codigo.c", "r") ##Leer archivo
 
 # Give the lexer some input
-lexer.input(source_code)
+lexer.input(fileData.read())
 
 # Tokenize
 while True:
@@ -221,7 +209,7 @@ print("\n")
 lexer.lineno = 0
 
 # Parse
-parser.parse(source_code)
+parser.parse(fileData.read())
 
 # Print result
 if success:
