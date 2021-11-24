@@ -15,27 +15,35 @@ def miParser(data):
     tok = lexer.token()
     x = stack[-1]  # obtiene el tope de la pila
     while True:
-        print("Token :", tok)
+        print("Token tipo:", tok.type)
+        print("X:", x )
+        print("stack", stack)
+        print('\n')
         if x == tok.type and x == "EOF":
             print("Todo bien todo correcto")
             return  # aceptar
         else:
-            if x == tok.type and x != "EOF":
+            if x == tok.type and x != "EOF": #Llego a un terminal, llego a una "hoja del arbol"
                 symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos)
                 stack.pop()
                 x = stack[-1]
                 tok = lexer.token()
-            if x in tokens and x != tok.type:
+                #Se quita el primer elem a la pila y se tiene el siguiente token
+            if x in tokens and x != tok.type: #Aparentente es un terminal, pero no es lo que se esperaba
                 print("Error: se esperaba ", tok.type)
                 print("en la posicion: ", tok.lexpos)
+                print("en la linea: ", tok.lineno)
                 return 0                                    #TODO: Manejar errores
-            if x not in tokens:  # es no terminal
+            if x not in tokens:  # es NO terminal
                 celda = buscar_en_tabla(x, tok.type)
-                if celda is None:
+                if celda is None: #SI NO hay ninguna produccion
                     print("Error: NO se esperaba", tok.type)
+                    print("busco produccion pero no encontró")
                     print("en la posicion: ", tok.lexpos)
+                    print("en la linea: ", tok.lineno)
                     return 0                                   #TODO: MANEJAR ERROR
                 else:
+                    #Vamos bien
                     stack.pop()
                     agregar_pila(celda)
                     x = stack[-1]
