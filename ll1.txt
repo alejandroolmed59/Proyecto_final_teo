@@ -1,26 +1,29 @@
-S -> D S
+S -> D S 
 S -> ''
 
-D -> R A ;
-D -> A ;
-D -> I 
+D -> R A ; //Tipo de dato y variables
+D -> A ;   //variable
+D -> I //IF STATEMENT
+D -> W //IF STATEMENT
 
-I -> if ( E ) { I1 } I2
-I1 -> D I1
+I -> if ( E ) { I1 } I2 // Entra al if 
+I1 -> D I1  // funcion a realizar
 I1 -> ''
 I2 -> else { I1 }
 I2 -> ''
 
-R -> int
+W -> while ( E ) { I1 } //WHILE
+
+R -> int  //Tipos de datos
 R -> float
 R -> char
 R -> void
 
-A -> id = E A1
-A1 -> , A
+A -> id = E A1  //Asignacion
+A1 -> , A      // Asignacion inline
 A1 -> ''
  
-E -> T E1
+E -> T E1   //Expresion a EVALUAR del if
 E1 -> + T E1
 E1 -> - T E1 
 E1 -> ''
@@ -29,7 +32,7 @@ T1 -> * F T1
 T1 -> / F T1 
 T1 -> L F T1 
 T1 -> ''
-F  -> ( E )  
+F  -> ( E )  //Encuentra la Expresion
 F -> C
 
 C -> num
@@ -39,3 +42,5 @@ C -> id
 L -> ==
 L -> &&
 L -> ||
+L -> >
+L -> <

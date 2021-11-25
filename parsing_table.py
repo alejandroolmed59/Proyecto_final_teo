@@ -14,6 +14,7 @@ T1 = 11
 F = 12
 C = 13
 L = 14
+W = 15
 #Tabla LL 1 CONSTRUIDA CON LA GRAMATICA
 tabla2 = [
     # Start
@@ -24,6 +25,7 @@ tabla2 = [
     [S, "LBRACE", None],
     [S, "RBRACE", None],
     [S, "ELSE", None],
+    [S, "WHILE", [D, S]],
     [S, "INT", [D, S]],
     [S, "FLOAT", [D, S]],
     [S, "CHAR", [D, S]],
@@ -49,6 +51,7 @@ tabla2 = [
     [D, "LBRACE", None],
     [D, "RBRACE", None],
     [D, "ELSE", None],
+    [D, "WHILE", [W]],
     [D, "INT", [R, A, "SEMICOLON"]],
     [D, "FLOAT", [R, A, "SEMICOLON"]],
     [D, "CHAR", [R, A, "SEMICOLON"]],
@@ -98,6 +101,7 @@ tabla2 = [
     [I1, "RPAREN", None],
     [I1, "LBRACE", None],
     [I1, "RBRACE", ["vacia"]],
+    [I1, "ELSE", [D, I1]],
     [I1, "ELSE", [D, I1]],
     [I1, "INT", [D, I1]],
     [I1, "FLOAT", [D, I1]],
@@ -315,6 +319,8 @@ tabla2 = [
     [T1, "EQUALS", [L, F, T1]],
     [T1, "AND", [L, F, T1]],
     [T1, "OR", [L, F, T1]],
+    [T1, "GREATER", [L, F, T1]],
+    [T1, "LESS", [L, F, T1]],
     [T1, "EOF", None],
     # Expression finish
     [F, "SEMICOLON", None],
@@ -390,5 +396,36 @@ tabla2 = [
     [L, "EQUALS", ["EQUALS"]],
     [L, "AND", ["AND"]],
     [L, "OR", ["OR"]],
+    [L, "GREATER", ["GREATER"]],
+    [L, "LESS", ["LESS"]],
     [L, "EOF", None],
+    #WHILE
+    [W, "SEMICOLON", None],
+    [W, "IF", None],
+    [W, "LPAREN", None],
+    [W, "RPAREN", None],
+    [W, "LBRACE", None],
+    [W, "RBRACE", None],
+    [W, "ELSE", None],
+    [W, "INT", None],
+    [W, "FLOAT", None],
+    [W, "CHAR", None],
+    [W, "VOID", None],
+    [W, "ID", None],
+    [W, "ASSIGN", None],
+    [W, "COMMA", None],
+    [W, "PLUS", None],
+    [W, "MINUS", None],
+    [W, "TIMES", None],
+    [W, "DIVIDE", None],
+    [W, "NUMBER", None],
+    [W, "LETTER", None],
+    [W, "EQUALS", None],
+    [W, "AND", None],
+    [W, "OR", None],
+    [W, "GREATER", None],
+    [W, "LESS", None],
+    [W, "EOF", None],
+    [W, "WHILE", ["WHILE", "LPAREN", E, "RPAREN", "LBRACE", I1, "RBRACE"]],
+
 ]

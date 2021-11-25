@@ -24,7 +24,7 @@ def miParser(data):
             return  # aceptar
         else:
             if x == tok.type and x != "EOF": #Llego a un terminal, llego a una "hoja del arbol"
-                symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos)
+                symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos) #TODO:DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
                 stack.pop()
                 x = stack[-1]
                 tok = lexer.token()
@@ -52,7 +52,7 @@ def miParser(data):
         # break
         # print(tok)
         # print(tok.type, tok.value, tok.lineno, tok.lexpos)
-
+    
 
 def buscar_en_tabla(no_terminal, terminal):
     for i in range(len(tabla2)):
@@ -70,8 +70,12 @@ def agregar_pila(produccion):
 symbol_table = defaultdict(list)
  
 # Insertar
-def symbol_table_insert(name, type, line, pos):
-    symbol_table[name].append([type, line, pos])
+def symbol_table_insert(name, type, line, pos, valor=""):
+    symbol_table[name].append([type, line, pos, valor])
+
+#Actualizar
+def symbol_table_updateValue(name,nuevoValor):
+    symbol_table[name].valor = nuevoValor;
 
 
 # Mostrar
@@ -93,6 +97,6 @@ def symbol_table_delete(name):
 
 fileData = open("./codigo.c", "r")
 
-miParser(fileData.read()+"$")
-# symbol_table_print()
-# symbol_table_search("=")
+miParser(fileData.read()+"$");
+#symbol_table_print();
+symbol_table_search("b");
