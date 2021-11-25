@@ -15,16 +15,16 @@ def miParser(data):
     tok = lexer.token()
     x = stack[-1]  # obtiene el tope de la pila
     while True:
-        print("Token tipo:", tok.type)
-        print("X:", x )
-        print("stack", stack)
-        print('\n')
+        #print("Token tipo:", tok.type)
+        #print("X:", x )
+        #print("stack", stack)
+        #print('\n')
         if x == tok.type and x == "EOF":
             print("Todo bien todo correcto")
             return  # aceptar
         else:
             if x == tok.type and x != "EOF": #Llego a un terminal, llego a una "hoja del arbol"
-                symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos) #TODO:DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
+                symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos) #TODO: DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
                 stack.pop()
                 x = stack[-1]
                 tok = lexer.token()
@@ -32,16 +32,25 @@ def miParser(data):
             if x in tokens and x != tok.type: #Aparentente es un terminal, pero no es lo que se esperaba
                 print("Error: se esperaba ", tok.type)
                 print("en la posicion: ", tok.lexpos)
-                print("en la linea: ", tok.lineno)
-                return 0                                    #TODO: Manejar errores
+                print("en la linea: ", tok.lineno)                                #TODO: Manejar errores
+                stack.pop()
+                if(len(stack)==0):
+                    return 0
+                else:
+                    x = stack[-1];
+                
             if x not in tokens:  # es NO terminal
                 celda = buscar_en_tabla(x, tok.type)
                 if celda is None: #SI NO hay ninguna produccion
                     print("Error: NO se esperaba", tok.type)
                     print("busco produccion pero no encontró")
                     print("en la posicion: ", tok.lexpos)
-                    print("en la linea: ", tok.lineno)
-                    return 0                                   #TODO: MANEJAR ERROR
+                    print("en la linea: ", tok.lineno)                                #TODO: MANEJAR ERROR
+                    stack.pop()
+                    if(len(stack)==0):
+                        return 0
+                    else:
+                        x = stack[-1];
                 else:
                     #Vamos bien
                     stack.pop()
@@ -99,4 +108,4 @@ fileData = open("./codigo.c", "r")
 
 miParser(fileData.read()+"$");
 #symbol_table_print();
-symbol_table_search("b");
+#symbol_table_search("b");
