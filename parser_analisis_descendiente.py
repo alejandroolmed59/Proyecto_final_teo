@@ -11,16 +11,17 @@ stack = ["EOF", 0]
 def miParser(data):
     # f = open('fuente.c','r')
     # lexer.input(f.read())
+    
     lexer.input(data)
     tok = lexer.token()
     x = stack[-1]  # obtiene el tope de la pila
     haveError = False
     while True:
-        #print("Token tipo:", tok.type)
         #print("X:", x )
         #print("stack", stack)
         #print('\n')
         if x == tok.type and x == "EOF":
+            
             if (haveError): print("Compilado con errores")
             else: print("Todo bien todo correcto")
             return  # aceptar
