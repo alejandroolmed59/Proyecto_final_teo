@@ -24,8 +24,8 @@ def miParser(data):
             if (haveError):
                 print("Compilado con errores")
             else:
-                print("Todo bien todo correcto")
                 symbol_table_print_2()
+                print("Todo bien todo correcto")
 
             return  # aceptar
         else:
@@ -95,14 +95,25 @@ def symbol_table_insert_2(lexToken, ambito):
 
 def symbol_table_print_2():
     for index, lexToken in enumerate(symbol_table_2):
-        cad = ""
         if (lexToken.type == "ASSIGN"):
-            cad = symbol_table_2[index - 1].value + " = "
+            # cad = symbol_table_2[index - 1].value + " = "
             indexCount = index + 1
             while(symbol_table_2[indexCount].type != "SEMICOLON"):
-                cad = cad + str(symbol_table_2[indexCount].value) + " "
+                cad = str(symbol_table_2[indexCount].value) + " "
                 indexCount = indexCount + 1
-            print(cad, " -> ", lexToken.ambito)
+            print("Valor:", cad)
+            print("Linea:", symbol_table_2[index - 1].lineno)
+            print("Ámbito:", symbol_table_2[index - 1].ambito)
+            print('\n')
+        else:
+            if (lexToken.type != "ID"):
+                print("Tipo:", lexToken.type) 
+                print("Valor:", "")
+                print("Linea:", lexToken.lineno)
+                print("Ámbito:", lexToken.ambito)
+                print('\n')
+            else:
+                print("Tipo:", lexToken.type)
 
 # Insertar
 def symbol_table_insert(name, type, line, pos, valor=""):
