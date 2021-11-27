@@ -37,7 +37,7 @@ def miParser(data):
             if x ==tok.type and x=="RBRACE":
                 ambito = "global"
             if x == tok.type and x != "EOF": #Llego a un terminal, llego a una "hoja del arbol"
-                symbol_table_insert_2(tok)
+                symbol_table_insert_2(tok, ambito)
                 symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos) #TODO: DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
                 stack.pop()
                 x = stack[-1]
@@ -91,7 +91,8 @@ def agregar_pila(produccion):
 symbol_table = defaultdict(list)
 symbol_table_2 = []
 
-def symbol_table_insert_2(lexToken):
+def symbol_table_insert_2(lexToken, ambito):
+    lexToken.ambito = ambito
     symbol_table_2.append(lexToken)
 
 def symbol_table_print_2():
@@ -103,7 +104,7 @@ def symbol_table_print_2():
             while(symbol_table_2[indexCount].type != "SEMICOLON"):
                 cad = cad + str(symbol_table_2[indexCount].value) + " "
                 indexCount = indexCount + 1
-            print(cad)
+            print(cad, " -> ", lexToken.ambito)
 
 # Insertar
 def symbol_table_insert(name, type, line, pos, valor=""):
@@ -126,10 +127,8 @@ def symbol_table_search(name):
     print(symbol_table[name])
 
 # Insertar
-def symbol_table_insert(name, type, line, pos, valor = "", ambito = "global"):
-    if(type=="ID"):
-        symbol_table[name].append([type, line, pos, valor, ambito])
-    symbol_table[name].append([type, line, pos, valor, ambito])
+def symbol_table_insert(name, type, line, pos, valor = ""):
+    symbol_table[name].append([type, line, pos, valor])
 
 #Actualizar
 def symbol_table_updateValue(name,nuevoValor):
