@@ -23,7 +23,7 @@ A -> id = E A1  //Asignacion
 A1 -> , A      // Asignacion inline
 A1 -> ''
  
-E -> T E1   //Expresion a EVALUAR del if
+E -> T E1   //Expresion a EVALUAR del if y while
 E1 -> + T E1 // 5 + 2 * 6 / 1
 E1 -> - T E1 
 E1 -> ''
