@@ -1,4 +1,4 @@
-S -> D S 
+S -> D S  //Inicio
 S -> ''
 
 D -> R A ; //Tipo de dato y variables
@@ -24,7 +24,7 @@ A1 -> , A      // Asignacion inline
 A1 -> ''
  
 E -> T E1   //Expresion a EVALUAR del if
-E1 -> + T E1
+E1 -> + T E1 // 5 + 2 * 6 / 1
 E1 -> - T E1 
 E1 -> ''
 T -> F T1

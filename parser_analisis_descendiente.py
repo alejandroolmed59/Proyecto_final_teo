@@ -4,6 +4,7 @@
 from lexer import tokens, lexer
 from parsing_table import *
 from collections import defaultdict
+import random
 
 stack = ["EOF", 0]
 
@@ -11,14 +12,14 @@ stack = ["EOF", 0]
 def miParser(data):
     # f = open('fuente.c','r')
     # lexer.input(f.read())
-    
+    ambito="global"
     lexer.input(data)
     tok = lexer.token()
     x = stack[-1]  # obtiene el tope de la pila
     haveError = False
     while True:
-        #print("X:", x )
-        #print("stack", stack)
+        print("X:", x )
+        print("stack", stack)
         #print('\n')
         if x == tok.type and x == "EOF":
             
@@ -26,8 +27,14 @@ def miParser(data):
             else: print("Todo bien todo correcto")
             return  # aceptar
         else:
+            if x == tok.type and x == "IF":
+                ambito="Bloque If "
+            if x == tok.type and x == "WHILE":
+                ambito="Bloque while "
+            if x ==tok.type and x=="RBRACE":
+                ambito = "global"
             if x == tok.type and x != "EOF": #Llego a un terminal, llego a una "hoja del arbol"
-                symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos) #TODO: DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
+                symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos, "", ambito) #TODO: DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
                 stack.pop()
                 x = stack[-1]
                 tok = lexer.token()
@@ -62,10 +69,6 @@ def miParser(data):
                     agregar_pila(celda)
                     x = stack[-1]
 
-        # if not tok:
-        # break
-        # print(tok)
-        # print(tok.type, tok.value, tok.lineno, tok.lexpos)
     
 
 def buscar_en_tabla(no_terminal, terminal):
@@ -83,25 +86,25 @@ def agregar_pila(produccion):
 # Symbol Table
 symbol_table = defaultdict(list)
  
-# Insertar
-def symbol_table_insert(name, type, line, pos, valor=""):
-    symbol_table[name].append([type, line, pos, valor])
-
-#Actualizar
-def symbol_table_updateValue(name,nuevoValor):
-    symbol_table[name].valor = nuevoValor;
-
-
 # Mostrar
 def symbol_table_print():
     for variable in symbol_table.items():
         for info in variable:
             print(info)
 
-
 # Buscar
 def symbol_table_search(name):
     print(symbol_table[name])
+
+# Insertar
+def symbol_table_insert(name, type, line, pos, valor = "", ambito = "global"):
+    if(type=="ID"):
+        symbol_table[name].append([type, line, pos, valor, ambito])
+    symbol_table[name].append([type, line, pos, valor, ambito])
+
+#Actualizar
+def symbol_table_updateValue(name,nuevoValor):
+    symbol_table[name].valor = nuevoValor;
 
 
 # Borrar
@@ -113,4 +116,4 @@ fileData = open("./codigo.c", "r")
 
 miParser(fileData.read()+"$");
 #symbol_table_print();
-#symbol_table_search("b");
+
