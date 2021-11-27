@@ -114,6 +114,7 @@ def symbol_table_print_2():
                 print('\n')
             else:
                 print("Tipo:", lexToken.type)
+                print("Nombre del identificador:", lexToken.value)
 
 # Insertar
 def symbol_table_insert(name, type, line, pos, valor=""):
@@ -142,4 +143,4 @@ fileData = open("./codigo.c", "r")
 
 miParser(fileData.read()+"$")
 # symbol_table_search("b");
-# symbol_table_print();
+symbol_table_print();
