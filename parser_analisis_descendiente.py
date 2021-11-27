@@ -96,10 +96,10 @@ def symbol_table_insert_2(lexToken, ambito):
 def symbol_table_print_2():
     for index, lexToken in enumerate(symbol_table_2):
         if (lexToken.type == "ASSIGN"):
-            # cad = symbol_table_2[index - 1].value + " = "
+            cad = ""
             indexCount = index + 1
             while(symbol_table_2[indexCount].type != "SEMICOLON"):
-                cad = str(symbol_table_2[indexCount].value) + " "
+                cad = cad + str(symbol_table_2[indexCount].value) + " "
                 indexCount = indexCount + 1
             print("Valor:", cad)
             print("Linea:", symbol_table_2[index - 1].lineno)
@@ -143,4 +143,4 @@ fileData = open("./codigo.c", "r")
 
 miParser(fileData.read()+"$")
 # symbol_table_search("b");
-symbol_table_print();
+#symbol_table_print();
