@@ -24,7 +24,10 @@ def miParser(data):
         if x == tok.type and x == "EOF":
             
             if (haveError): print("Compilado con errores")
-            else: print("Todo bien todo correcto")
+            else: 
+                print("Todo bien todo correcto")
+                symbol_table_print_2();
+
             return  # aceptar
         else:
             if x == tok.type and x == "IF":
@@ -141,7 +144,6 @@ def symbol_table_delete(name):
 fileData = open("./codigo.c", "r")
 
 miParser(fileData.read()+"$");
-symbol_table_print_2();
 #symbol_table_search("b");
 #symbol_table_print();
 
