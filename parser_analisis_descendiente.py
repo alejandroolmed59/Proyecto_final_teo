@@ -27,6 +27,7 @@ def miParser(data):
             return  # aceptar
         else:
             if x == tok.type and x != "EOF": #Llego a un terminal, llego a una "hoja del arbol"
+                symbol_table_insert_2(tok)
                 symbol_table_insert(tok.value, tok.type, tok.lineno, tok.lexpos) #TODO: DARLE VALOR EN LA TABLA DE SIMBOLO A LOS INDENTIFICADORES
                 stack.pop()
                 x = stack[-1]
@@ -82,7 +83,22 @@ def agregar_pila(produccion):
 
 # Symbol Table
 symbol_table = defaultdict(list)
- 
+symbol_table_2 = []
+
+def symbol_table_insert_2(lexToken):
+    symbol_table_2.append(lexToken)
+
+def symbol_table_print_2():
+    for index, lexToken in enumerate(symbol_table_2):
+        cad = ""
+        if (lexToken.type == "ASSIGN"):
+            cad = symbol_table_2[index - 1].value + " = "
+            indexCount = index + 1
+            while(symbol_table_2[indexCount].type != "SEMICOLON"):
+                cad = cad + str(symbol_table_2[indexCount].value) + " "
+                indexCount = indexCount + 1
+            print(cad)
+
 # Insertar
 def symbol_table_insert(name, type, line, pos, valor=""):
     symbol_table[name].append([type, line, pos, valor])
@@ -112,5 +128,5 @@ def symbol_table_delete(name):
 fileData = open("./codigo.c", "r")
 
 miParser(fileData.read()+"$");
-#symbol_table_print();
+symbol_table_print_2();
 #symbol_table_search("b");
